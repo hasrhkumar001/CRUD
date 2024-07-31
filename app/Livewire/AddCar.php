@@ -28,8 +28,8 @@ class AddCar extends Component
             'brand_name'=>'required',
             'capacity'=>'required',
             'fuel_type'=>'required',
-            'photo' => 'required|image|max:1024',
-            'car_desc' => 'required|max:1024',
+            'photo' => 'required|image|max:10240',
+            'car_desc' => 'required|max:10240',
             'car_mileage' => 'required',
             'car_price' => 'required',
             'model_year'=> 'required',
@@ -37,15 +37,15 @@ class AddCar extends Component
         ]);
     
         $new_car =new Car;
-        $new_car->car_name =$this->car_name;
-        $new_car->brand =$this->brand_name;
+        $new_car->car_name =strtoupper($this->car_name);
+        $new_car->brand =strtoupper($this->brand_name);
         $new_car->engine_capacity =$this->capacity;
-        $new_car->fuel_type =$this->fuel_type;
+        $new_car->fuel_type =strtoupper($this->fuel_type);
         $new_car->car_desc =$this->car_desc;
         $new_car->car_mileage =$this->car_mileage;
         $new_car->car_price =$this->car_price;
         $new_car->model_year =$this->model_year;
-        $new_car->transmission_type =$this->transmission_type;
+        $new_car->transmission_type =strtoupper($this->transmission_type);
 
         // $path1 = '';
         // if($this->photo){

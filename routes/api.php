@@ -16,6 +16,7 @@ Route::get('/user', function (Request $request) {
 //     Route::post('/auth/login', [AuthController::class, 'login']);
 //     // Add other routes that need CORS headers here
 // });
+Route::apiResource('cars',CarController::class);
 
 Route::group(['prefix' => 'auth'], function ($router){
     Route::post('login', [AuthController::class,'login']);
@@ -27,5 +28,5 @@ Route::middleware(['auth:api'])->group(function(){
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
     
-    Route::apiResource('cars',CarController::class);
+    
 });

@@ -58,14 +58,14 @@
                 </div>
                 <div class="mb-3">
                     <label for="car_mileage" class="form-label">Mileage</label>
-                    <input type="" class="form-control" wire:model="car_mileage" id="car_mileage" placeholder="Enter Car Mileage">
+                    <input  type="number" step="0.1" min="0"  class="form-control" wire:model="car_mileage" id="car_mileage" placeholder="Enter Car Mileage">
                     @error('car_mileage')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label for="model_year" class="form-label">Model year</label>
-                    <input type="number" step="0.1" class="form-control" wire:model="model_year" id="model_year" placeholder="Enter Model Year">
+                    <input type="number" min="1900" max="2040" class="form-control" wire:model="model_year" id="model_year" placeholder="Enter Model Year">
                     @error('model_year')
                         <span class="text-danger">{{$message}}</span>
                     @enderror

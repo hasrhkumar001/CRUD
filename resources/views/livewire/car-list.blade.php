@@ -36,7 +36,7 @@
       <!-- <td>{{ 'public/photos/' . $item->car_img }}</td> -->
       <td >{{$item->car_name}}</td>
       <td >{{$item->brand}}</td>
-      <td >@if($item->fuel_type == 'Petrol' || $item->fuel_type == 'Diesel')
+      <td >@if($item->fuel_type == 'PETROL' || $item->fuel_type == 'DIESEL')
                 {{$item->engine_capacity}} cc
           @else
                 {{$item->engine_capacity}} KWh
@@ -45,7 +45,7 @@
       <td >{{$item->fuel_type}}</td>
       <td >{{$item->transmission_type}}</td>
       <td >{{$item->car_mileage}} 
-            @if ($item->fuel_type == 'Electric')
+            @if ($item->fuel_type == 'ELECTRIC')
                 km
             @else
                 kmpl

@@ -42,7 +42,7 @@ class EditCar extends Component
             'brand_name'=>'required',
             'capacity'=>'required',
             'fuel_type'=>'required',
-            'photo' => 'required|image|max:1024',
+            'photo' => 'required|image|max:10240',
             'car_desc' => 'required|max:1024',
             'car_mileage' => 'required',
             'car_price' => 'required',
@@ -59,15 +59,15 @@ class EditCar extends Component
             $filePath = 'photos/' . $filename;
             
             Car::where('id',$this->car_id)->update([
-                'car_name'=> $this->car_name,
-                'brand'=>$this->brand_name,
+                'car_name'=> strtoupper($this->car_name),
+                'brand'=>strtoupper($this->brand_name),
                 'engine_capacity'=>$this->capacity,
-                'fuel_type'=>$this->fuel_type,
+                'fuel_type'=>strtoupper($this->fuel_type),
                 'car_img'=>$filePath,
                 'car_price'=>$this->car_price,
                 'car_mileage'=>$this->car_mileage,
                 'model_year'=>$this->model_year,
-                'transmission_type'=>$this->transmission_type,
+                'transmission_type'=>strtoupper($this->transmission_type),
                 'car_desc'=>$this->car_desc
             ]);
             return $this->redirect('/cars',navigate:true);
