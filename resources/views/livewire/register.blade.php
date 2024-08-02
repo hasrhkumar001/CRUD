@@ -1,10 +1,12 @@
+
+
 <div class="container w-50 mt-5">
 <div class="card ">
   <div class="card-header text-center">
     Register
   </div>
   <div class="card-body">
-    <!-- <h5 class="card-title">Special title treatment</h5> -->
+    
     <form wire:submit="register" >
         @csrf
         <div class="mb-3">

@@ -16,9 +16,9 @@
         @livewireStyles
 </head>
 <body>
-    <livewire:navbar />
+    
     <div class="d-flex">
-        <livewire:sidebar />
+        
         <div class="container-fluid">
         {{ $slot }}
         <!-- Body content -->

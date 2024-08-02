@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ForgetPasswordController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Middleware\CorsMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,9 @@ Route::group(['prefix' => 'auth'], function ($router){
     Route::post('register', [AuthController::class,'register']);
 });
  
+Route::post('/forget-password',[ForgetPasswordController::class,'sendResetLinkEmail']);
+Route::post('/reset-password',[ResetPasswordController::class,'reset'])->name('password.reset');
+
 Route::middleware(['auth:api'])->group(function(){
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);

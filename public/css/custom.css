@@ -1,0 +1,29 @@
+/* public/css/custom.css */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.nav-link {
+    color:  #d1d1d1;
+    font-weight: bold;
+}
+.nav-link:hover {
+    color:  #fffefe;
+    font-weight: bold;
+}
+
+.nav-link.active  {
+    background-color: #3498db49 ;
+    
+}
+.nav-link.active a{
+    color: white;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.form-label{
+    font-weight: bold;
+}
