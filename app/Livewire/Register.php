@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Models\User;
-use App\Models\Users;
+use App\Models\Admin;
+
 use Livewire\Component;
 
 class Register extends Component
@@ -24,7 +24,7 @@ class Register extends Component
         // Users::create(
         //     $this->only(['name', 'email' ,'password'])
         // );
-        $new_user =new Users;
+        $new_user =new Admin;
         $new_user->name =$this->name;
         $new_user->email =$this->email;
         $new_user->password =bcrypt($this->password);

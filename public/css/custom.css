@@ -7,11 +7,23 @@ body {
     color:  #d1d1d1;
     font-weight: bold;
 }
+
+.main-link{
+    color:  #d1d1d1;
+    font-weight: bold;
+    
+}
 .nav-link:hover {
     color:  #fffefe;
     font-weight: bold;
 }
-
+.nav-link:focus{
+    color:  white;
+    
+}
+#carMenu:focus{
+    background-color: #3c4e73;
+}
 .nav-link.active  {
     background-color: #3498db49 ;
     
@@ -26,4 +38,64 @@ body {
 
 .form-label{
     font-weight: bold;
+}
+
+.navbar{
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1;
+    margin-top: 50px;
+    
+}
+
+.main-content {
+    margin-left: 250px; /* Match the width of the sidebar */
+    padding: 20px;
+    margin-top: 50px;
+  }
+
+
+.nav-item{
+    margin:10px 0px;
+    padding: 10px;
+    border-radius: 10px;
+    border-bottom: 1px solid #d1d1d1;
+    
+    
+  }
+  .nav-item, .nav-content{
+    transition: background-color 0.7s ease, color 0.7s ease, border-radius 0.7s ease, border-top 0.7s ease;
+  }
+  
+
+  .nav-item:has(.nav-link[aria-expanded="true"]) {
+    
+    border-top: 1px solid #d1d1d1;
+    color: white;
+    border-radius: 10px;
+    
+}
+
+
+
+
+
+
+.sidebar .nav-item .nav-link[aria-expanded="true"] .toggle-icon {
+    transform: rotate(180deg); /* Rotate icon */
+}
+
+/* Custom toggle icon transition */
+.toggle-icon {
+    transition: transform 0.3s;
 }

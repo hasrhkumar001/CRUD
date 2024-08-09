@@ -1,10 +1,10 @@
-<div class="container my-5">
+<div class="container my-3">
     <div class="card">
         <div class="card-header justify-content-baseline">  
             <div class="row">
            <div class="col"><h2>Edit Car</h2></div>
            <div class="col">
-           <a href="/cars" wire:navigate class=" btn btn-primary float-end">Cars List</a>
+           <a href="/" wire:navigate class=" btn btn-primary float-end">Cars List</a>
 </div>
 </div>
         </div>

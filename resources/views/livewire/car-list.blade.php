@@ -1,10 +1,10 @@
-<div class="container my-5">
+<div class="container my-3">
     <div class="card">
         <div class="card-header justify-content-baseline">
             <div class="row">
            <div class="col"><h2>Cars List</h2></div>
            <div class="col">
-           <a href="/login" wire:navigate wire:click="logout" class=" btn btn-primary float-end">Logout</a>
+           
            <a href="/add" wire:navigate  class=" btn btn-success float-end mx-2">Add New Car</a>
            
 </div>

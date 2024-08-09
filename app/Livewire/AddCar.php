@@ -63,7 +63,7 @@ class AddCar extends Component
         
         $new_car->save();
         
-        return $this->redirect('/cars',navigate:true);
+        return $this->redirect('/',navigate:true);
     }
 
     public function render()

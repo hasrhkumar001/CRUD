@@ -19,7 +19,7 @@
     <livewire:navbar />
     <div class="d-flex">
         <livewire:sidebar />
-        <div class="container-fluid">
+        <div class="container-fluid main-content">
         {{ $slot }}
         <!-- Body content -->
         @yield('content')
@@ -28,6 +28,7 @@
 
     @livewireScripts
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
         
         
     </body>

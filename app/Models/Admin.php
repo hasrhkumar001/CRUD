@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Laravel\Sanctum\HasApiTokens;
-class User extends Authenticatable implements JWTSubject
+use App\Notifications\ResetPasswordNotification;
+
+class Admin extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable;
+    protected $guard = "admin";
 
     /**
      * The attributes that are mass assignable.
@@ -60,10 +60,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-    public function getIsAdminAttribute()
-{
-    return $this->role === 'admin'; // assuming you have a role field
-}
 
     public function sendPasswordResetNotification($token){
         $this->notify(new ResetPasswordNotification($token));

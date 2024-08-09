@@ -18,12 +18,12 @@ class Login extends Component
             'password'=>'required'
         ]);
 
-        if(Auth::attempt($validated)){
+        if (Auth::guard('admin')->attempt($validated)) {
             $request->session()->regenerate();
-            
-            return $this->redirect('/cars',navigate:true);
+            return $this->redirect('/');
         }
-        $this->addError('email','Wrong email or password');
+        
+        $this->addError('password', 'The provided credentials do not match our records.');
     }
     public function render()
     {

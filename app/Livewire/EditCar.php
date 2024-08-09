@@ -70,7 +70,7 @@ class EditCar extends Component
                 'transmission_type'=>strtoupper($this->transmission_type),
                 'car_desc'=>$this->car_desc
             ]);
-            return $this->redirect('/cars',navigate:true);
+            return $this->redirect('/',navigate:true);
         }catch(\Exception $e){
             dd($e);
         }
