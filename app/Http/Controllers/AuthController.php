@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -26,6 +27,7 @@ class AuthController extends Controller
 
     return response()->json([
         'message' => 'User successfully registered.'
+        
     ]);
 
    }
@@ -46,11 +48,11 @@ class AuthController extends Controller
         );
 
         // Generate a token for the user
-        $accessToken = $user->createToken('DriveDetails')->accessToken;
-        Log::error('Access token: ' .$accessToken);
+        $token = JWTAuth::fromUser($user);
+        Log::error('Access token: ' .$token);
 
         return response()->json([
-            'access_token' => $accessToken,
+            'access_token' => $token,
             'user' => $user,
         ]);
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Cars;
 use App\Models\Car;
+use App\Models\CarModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -172,6 +173,8 @@ class CarController extends Controller
             'message' => "Car deleted successfully",
         ], 200);
     }
+
+    
 
     public function filter(Request $request)
     {

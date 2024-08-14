@@ -23,4 +23,8 @@ class Car extends Model
         'transmission_type',
         'model_year'
     ];
+    public function carModels()
+    {
+        return $this->hasMany(CarModel::class);
+    }
 }
