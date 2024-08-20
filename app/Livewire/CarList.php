@@ -23,6 +23,10 @@ class CarList extends Component
         }
     }
 
+    public function viewCarModels($carId)
+    {
+        return redirect()->route('car-models', ['carId' => $carId]);
+    }
     
     public function render()
     {

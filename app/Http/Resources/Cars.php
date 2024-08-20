@@ -24,7 +24,7 @@ class Cars extends JsonResource
             'fuel_type'=> $this->fuel_type,
             'car_img'=> $this->car_img,
             'car_mileage'=> $this->car_mileage,
-            'car_price'=> $this->car_price,
+            'car_price_range'=> $this->car_price_range,
             'car_desc'=> $this->car_desc,
             'model_year'=>$this->model_year,
             'transmission_type'=>$this->transmission_type,

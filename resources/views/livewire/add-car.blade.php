@@ -1,27 +1,31 @@
 <div class="container my-3">
+    @if (session()->has('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
     <div class="card">
         <div class="card-header justify-content-baseline">
             <div class="row">
-           <div class="col"><h2>Add New Car</h2></div>
-           <div class="col">
-           <a href="/" wire:navigate class=" btn btn-primary float-end">Cars List</a>
-           
-</div>
-</div>
+                <div class="col"><h2>Add New Car</h2></div>
+                <div class="col">
+                    <a href="/" wire:navigate class="btn btn-primary float-end">Cars List</a>
+                </div>
+            </div>
         </div>
-        <div class="card-body ">
-            <form wire:submit="saveCar" enctype="multipart/form-data">
+        <div class="card-body">
+            <form wire:submit.prevent="saveCar" enctype="multipart/form-data">
                 <div class="row">
                     <div class="mb-3 col-6">
                         <label for="car_name" class="form-label">Car Name</label>
-                        <input type="text" class="form-control" wire:model="car_name" id="car_name" placeholder="Enter Car Name">
+                        <input type="text" class="form-control" wire:model.lazy="car_name" id="car_name" placeholder="Enter Car Name">
                         @error('car_name')
                             <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="mb-3 col-6">
                         <label for="brand_name" class="form-label">Brand Name</label>
-                        <input type="text" class="form-control" wire:model="brand_name" id="brand_name" placeholder="Enter Brand Name">
+                        <input type="text" class="form-control" wire:model.lazy="brand_name" id="brand_name" placeholder="Enter Brand Name">
                         @error('brand_name')
                             <span class="text-danger">{{$message}}</span>
                         @enderror
@@ -30,30 +34,29 @@
                 <div class="row">
                     <div class="mb-3 col-4">
                         <label for="capacity" class="form-label">Engine Capacity</label>
-                        <input type="number" class="form-control" wire:model="capacity" id="capacity" placeholder="Enter Car Engine Capacity">
+                        <input type="text" class="form-control" wire:model.lazy="capacity" id="capacity" placeholder="Enter Engine Capacity (e.g., 1800cc-2700cc)">
                         @error('capacity')
                             <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="mb-3 col-4">
-                        <label for="fuel_type" class="form-label">Fuel Type</label>
-                        <select id="fuel_type" wire:model="fuel_type" class="form-select">
-                            <option selected>Choose</option>
-                            <option value="Petrol">Petrol</option>
-                            <option value="Diesel">Diesel</option>
-                            <option value="Electric">Electric</option>
+                        <label for="fuel_type" class="form-label">Fuel Type <span class="text-secondary "> (Add Electric Car Separately)</span> </label>
+                        <select id="fuel_type" wire:model="fuel_type" class="form-select" multiple>
+                            <option value="PETROL">Petrol</option>
+                            <option value="DIESEL">Diesel</option>
+                            <option value="ELECTRIC">Electric</option>
+                            <option value="HYBRID">Hybrid</option>
                         </select>
                         @error('fuel_type')
                             <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
+
                     <div class="mb-3 col-4">
                         <label for="transmission_type" class="form-label">Transmission Type</label>
-                        <select id="transmission_type" wire:model="transmission_type" class="form-select">
-                            <option selected>Choose</option>
-                            <option value="Automatic">Automatic</option>
-                            <option value="Manual">Manual</option>
-                            
+                        <select id="transmission_type" wire:model="transmission_type" class="form-select" multiple>
+                            <option value="AUTOMATIC">Automatic</option>
+                            <option value="MANUAL">Manual</option>
                         </select>
                         @error('transmission_type')
                             <span class="text-danger">{{$message}}</span>
@@ -63,36 +66,30 @@
                 <div class="row">
                     <div class="mb-3 col-4">
                         <label for="car_mileage" class="form-label">Mileage</label>
-                        <input  type="number" step="0.1" min="0"  class="form-control" wire:model="car_mileage" id="car_mileage" placeholder="Enter Car Mileage">
+                        <input type="number" step="0.1" min="0" class="form-control" wire:model.lazy="car_mileage" id="car_mileage" placeholder="Enter Car Mileage">
                         @error('car_mileage')
                             <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
+                    
                     <div class="mb-3 col-4">
-                        <label for="model_year" class="form-label">Model year</label>
-                        <input type="number" min="1900" max="2040" class="form-control" wire:model="model_year" id="model_year" placeholder="Enter Model Year">
-                        @error('model_year')
-                            <span class="text-danger">{{$message}}</span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-4">
-                        <label for="car_price" class="form-label">Price</label>
-                        <input type="number" class="form-control" wire:model="car_price" id="car_price" placeholder="Enter Car Price">
-                        @error('car_price')
+                        <label for="car_price_range" class="form-label">Price Range</label>
+                        <input type="text" class="form-control" wire:model.lazy="car_price_range" id="car_price_range" placeholder="Enter Car Price Range (e.g., 10000-50000)">
+                        @error('car_price_range')
                             <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="car_desc" class="form-label">Description</label>
-                    <input type="text" class="form-control" wire:model="car_desc" id="car_desc" placeholder="Enter Car Description">
+                    <input type="text" class="form-control" wire:model.lazy="car_desc" id="car_desc" placeholder="Enter Car Description">
                     @error('car_desc')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label for="photo" class="form-label">Car Image</label>
-                    <input type="file" class="form-control" wire:model="photo" >
+                    <input type="file" class="form-control" wire:model="photo">
                     @error('photo')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
@@ -101,5 +98,4 @@
             </form>
         </div>
     </div>
-
 </div>

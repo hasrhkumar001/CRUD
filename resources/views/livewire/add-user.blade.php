@@ -1,4 +1,9 @@
 <div class="container my-3">
+    @if (session()->has('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
     <div class="card">
         <div class="card-header justify-content-baseline">
             <div class="row">

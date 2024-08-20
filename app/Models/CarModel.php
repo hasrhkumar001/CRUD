@@ -13,9 +13,8 @@ class CarModel extends Model
     protected $table = 'car_models';
 
     // Define the fields that can be mass-assigned
-    protected $fillable = ['car_name','car_id',
+    protected $fillable = ['car_id',
     'model_name',
-    'brand',
     'engine_capacity',
     'fuel_type',
     'car_desc',

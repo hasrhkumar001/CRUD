@@ -12,9 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('cars', function (Blueprint $table) {
+            $table->id();
+            $table->string('car_name');
+            $table->string('brand');
+            $table->string('engine_capacity');
+            $table->string('fuel_type');
+            $table->string('car_img');
+            $table->string('transmission_type');
             $table->string('car_desc');
             $table->string('car_mileage');
-            $table->string('car_price');
+            $table->string('car_price_range');
+            $table->timestamps();
+           
         });
     }
 
@@ -23,8 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('cars', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('cars');
     }
 };

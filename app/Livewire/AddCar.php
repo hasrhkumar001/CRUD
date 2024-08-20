@@ -16,8 +16,8 @@ class AddCar extends Component
     public $photo='' ;
     public $car_desc='';
     public $car_mileage='';
-    public $car_price='';
-    public $model_year='';
+    public $car_price_range='';
+   
     public $transmission_type='';
 
     public $path1;
@@ -26,26 +26,25 @@ class AddCar extends Component
         $this->validate([
             'car_name'=>'required',
             'brand_name'=>'required',
-            'capacity'=>'required',
-            'fuel_type'=>'required',
+            'capacity'=>'required|string',
             'photo' => 'required|image|max:10240',
             'car_desc' => 'required|max:10240',
             'car_mileage' => 'required',
-            'car_price' => 'required',
-            'model_year'=> 'required',
-            'transmission_type'=>'required'
+            'car_price_range' => 'required',
+            'fuel_type.*' => 'in:PETROL,DIESEL,ELECTRIC,HYBRID',
+            'transmission_type.*' => 'in:AUTOMATIC,MANUAL',
+            
         ]);
     
         $new_car =new Car;
         $new_car->car_name =strtoupper($this->car_name);
         $new_car->brand =strtoupper($this->brand_name);
         $new_car->engine_capacity =$this->capacity;
-        $new_car->fuel_type =strtoupper($this->fuel_type);
+        $new_car->fuel_type =implode(',',$this->fuel_type);
         $new_car->car_desc =$this->car_desc;
         $new_car->car_mileage =$this->car_mileage;
-        $new_car->car_price =$this->car_price;
-        $new_car->model_year =$this->model_year;
-        $new_car->transmission_type =strtoupper($this->transmission_type);
+        $new_car->car_price_range =$this->car_price_range;
+        $new_car->transmission_type =implode(',',$this->transmission_type);
 
         // $path1 = '';
         // if($this->photo){

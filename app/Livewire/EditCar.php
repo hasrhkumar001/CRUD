@@ -17,7 +17,7 @@ class EditCar extends Component
     public $photo;
     public $car_desc;
     public $car_mileage;
-    public $car_price;
+    public $car_price_range;
     public $model_year;
     public $transmission_type;
     public Car $car_data;
@@ -28,12 +28,11 @@ class EditCar extends Component
         $this->car_name=$this->car_data->car_name;
         $this->brand_name=$this->car_data->brand;
         $this->capacity=$this->car_data->engine_capacity;
-        $this->fuel_type=$this->car_data->fuel_type;
+        $this->fuel_type=explode(',',$this->car_data->fuel_type);
         $this->photo=$this->car_data->car_img;
         $this->car_mileage=$this->car_data->car_mileage;
-        $this->car_price=$this->car_data->car_price;
-        $this->model_year=$this->car_data->model_year;
-        $this->transmission_type=$this->car_data->transmission_type;
+        $this->car_price_range=$this->car_data->car_price_range;
+        $this->transmission_type=explode(',',$this->car_data->transmission_type);
         $this->car_desc=$this->car_data->car_desc;
     }
     public function update(){
@@ -41,13 +40,12 @@ class EditCar extends Component
             'car_name'=>'required',
             'brand_name'=>'required',
             'capacity'=>'required',
-            'fuel_type'=>'required',
             'photo' => 'required|image|max:10240',
             'car_desc' => 'required|max:1024',
             'car_mileage' => 'required',
-            'car_price' => 'required',
-            'model_year'=> 'required',
-            'transmission_type'=>'required'
+            'car_price_range' => 'required',
+            'fuel_type.*' => 'in:PETROL,DIESEL,ELECTRIC,HYBRID',
+            'transmission_type.*' => 'in:AUTOMATIC,MANUAL',
             
         ]);
 
@@ -62,12 +60,11 @@ class EditCar extends Component
                 'car_name'=> strtoupper($this->car_name),
                 'brand'=>strtoupper($this->brand_name),
                 'engine_capacity'=>$this->capacity,
-                'fuel_type'=>strtoupper($this->fuel_type),
+                'fuel_type'=>implode(',',$this->fuel_type),
                 'car_img'=>$filePath,
-                'car_price'=>$this->car_price,
+                'car_price_range'=>$this->car_price_range,
                 'car_mileage'=>$this->car_mileage,
-                'model_year'=>$this->model_year,
-                'transmission_type'=>strtoupper($this->transmission_type),
+                'transmission_type'=>implode(',',$this->transmission_type),
                 'car_desc'=>$this->car_desc
             ]);
             return $this->redirect('/',navigate:true);
