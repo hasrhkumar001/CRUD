@@ -41,11 +41,11 @@ class EditCar extends Component
             'brand_name'=>'required',
             'capacity'=>'required',
             'photo' => 'required|image|max:10240',
-            'car_desc' => 'required|max:1024',
+            'car_desc' => 'required|string',
             'car_mileage' => 'required',
             'car_price_range' => 'required',
-            'fuel_type.*' => 'in:PETROL,DIESEL,ELECTRIC,HYBRID',
-            'transmission_type.*' => 'in:AUTOMATIC,MANUAL',
+            'fuel_type.*' => 'in:Petrol,Diesel,Electric,Hybrid,CNG',
+            'transmission_type.*' => 'in:Automatic,Manual',
             
         ]);
 
@@ -57,8 +57,8 @@ class EditCar extends Component
             $filePath = 'photos/' . $filename;
             
             Car::where('id',$this->car_id)->update([
-                'car_name'=> strtoupper($this->car_name),
-                'brand'=>strtoupper($this->brand_name),
+                'car_name'=> $this->car_name,
+                'brand'=>$this->brand_name,
                 'engine_capacity'=>$this->capacity,
                 'fuel_type'=>implode(',',$this->fuel_type),
                 'car_img'=>$filePath,

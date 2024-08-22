@@ -35,12 +35,12 @@ class EditCarModel extends Component
     {
         $this->validate([
             'model_name' => 'required|string',
-            'transmission_type' => 'required|string',
             'engine_capacity' => 'required|string',
-            'fuel_type' => 'required|string',
             'car_desc' => 'required|string',
             'car_mileage' => 'required|string',
             'car_price' => 'required|string',
+            'fuel_type.*' => 'in:Petrol,Diesel,Electric,Hybrid,CNG',
+            'transmission_type.*' => 'in:Automatic,Manual',
         ]);
 
         $model = CarModel::find($this->modelId);

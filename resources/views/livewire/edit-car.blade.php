@@ -42,10 +42,11 @@
             <div class="mb-3 col-4">
                         <label for="fuel_type" class="form-label">Fuel Type <span class="text-secondary "> (Add Electric Car Separately)</span> </label>
                         <select id="fuel_type" wire:model="fuel_type" class="form-select" multiple>
-                            <option value="PETROL">Petrol</option>
-                            <option value="DIESEL">Diesel</option>
-                            <option value="ELECTRIC">Electric</option>
-                            <option value="HYBRID">Hybrid</option>
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="CNG">CNG</option>
+                            <option value="Electric">Electric</option>
+                            <option value="Hybrid">Hybrid</option>
                         </select>
                         @error('fuel_type')
                             <span class="text-danger">{{$message}}</span>
@@ -55,8 +56,8 @@
                     <div class="mb-3 col-4">
                         <label for="transmission_type" class="form-label">Transmission Type</label>
                         <select id="transmission_type" wire:model="transmission_type" class="form-select" multiple>
-                            <option value="AUTOMATIC">Automatic</option>
-                            <option value="MANUAL">Manual</option>
+                            <option value="Automatic">Automatic</option>
+                            <option value="Manual">Manual</option>
                         </select>
                         @error('transmission_type')
                             <span class="text-danger">{{$message}}</span>
@@ -66,7 +67,7 @@
         <div class="row">
             <div class="mb-3 col-4">
                 <label for="car_mileage" class="form-label">Mileage</label>
-                <input type="number" step="0.1" class="form-control" wire:model="car_mileage" id="car_mileage" placeholder="Enter Car Mileage">
+                <input type="text"  class="form-control" wire:model="car_mileage" id="car_mileage" placeholder="Enter Car Mileage">
                 @error('car_mileage')
                     <span class="text-danger">{{$message}}</span>
                 @enderror

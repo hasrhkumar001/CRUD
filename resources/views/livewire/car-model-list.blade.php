@@ -26,7 +26,8 @@
             <div class="card-body ">
             <table class="table table-hover">
                 <thead>
-                    <tr >
+                    <tr class="text-center align-middle">
+                        <th scope="col">Serial No.</th>
                         <th scope="col">Model Name</th>
                         <th scope="col">Transmission Type</th>
                         <th scope="col">Engine Capacity</th>
@@ -39,7 +40,8 @@
                 </thead>
                 <tbody>
                     @foreach($carModels as $model)
-                        <tr>
+                        <tr class="text-center align-middle">
+                            <th scope="row">{{$loop->iteration}}</th>
                             <td>{{ $model->model_name }}</td>
                             <td>{{ $model->transmission_type }}</td>
                             <td>{{ $model->engine_capacity }}</td>

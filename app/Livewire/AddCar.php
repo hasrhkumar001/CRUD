@@ -28,17 +28,17 @@ class AddCar extends Component
             'brand_name'=>'required',
             'capacity'=>'required|string',
             'photo' => 'required|image|max:10240',
-            'car_desc' => 'required|max:10240',
+            'car_desc' => 'required|string',
             'car_mileage' => 'required',
             'car_price_range' => 'required',
-            'fuel_type.*' => 'in:PETROL,DIESEL,ELECTRIC,HYBRID',
-            'transmission_type.*' => 'in:AUTOMATIC,MANUAL',
+            'fuel_type.*' => 'in:Petrol,Diesel,Electric,Hybrid,CNG',
+        'transmission_type.*' => 'in:Automatic,Manual',
             
         ]);
     
         $new_car =new Car;
-        $new_car->car_name =strtoupper($this->car_name);
-        $new_car->brand =strtoupper($this->brand_name);
+        $new_car->car_name =$this->car_name;
+        $new_car->brand =$this->brand_name;
         $new_car->engine_capacity =$this->capacity;
         $new_car->fuel_type =implode(',',$this->fuel_type);
         $new_car->car_desc =$this->car_desc;

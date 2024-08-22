@@ -9,6 +9,7 @@ use App\Livewire\CarModelList;
 use App\Livewire\EditCar;
 use App\Livewire\EditCarModel;
 use App\Livewire\Login;
+
 use App\Livewire\Register;
 
 use App\Livewire\UserList;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/register',Register::class)->name('register');
 
 Route::get('/login',Login::class)->name('login');
+
 
 
 Route::middleware('auth:admin')->group(function(){

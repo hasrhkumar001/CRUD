@@ -12,60 +12,110 @@ use Illuminate\Support\Facades\Validator;
 class CarController extends Controller
 {
     public function index(Request $request)
-    {
+{
+    $query = Car::query();
 
-        $query = Car::query();
+    if ($request->filled('fuel_type')) {
+        $query->where(function ($query) use ($request) {
+            foreach (explode(',', $request->fuel_type) as $fuelType) {
+                $query->orWhere('fuel_type', 'LIKE', '%' . $fuelType . '%');
+            }
+        });
+    }
 
-        if ($request->filled('fuel_type')) {
-            $query->where('fuel_type', $request->fuel_type);
-        }
+    if ($request->filled('transmission_type')) {
+        $query->where(function ($query) use ($request) {
+            foreach (explode(',', $request->transmission_type) as $transmissionType) {
+                $query->orWhere('transmission_type', 'LIKE', '%' . $transmissionType . '%');
+            }
+        });
+    }
 
-        if ($request->filled('engine_capacity')) {
-            $engineCapacityRange = explode(',', $request->engine_capacity);
+    if ($request->filled('engine_capacity')) {
+        $engineCapacityRange = explode('-', $request->engine_capacity);
+    
+        if (count($engineCapacityRange) === 2) {
+            // Handling a range format
             $minEngineCapacity = $engineCapacityRange[0];
             $maxEngineCapacity = $engineCapacityRange[1];
-            $query->whereBetween('engine_capacity', [$minEngineCapacity, $maxEngineCapacity]);
+            $query->where(function ($query) use ($minEngineCapacity, $maxEngineCapacity) {
+                $query->where(function ($subQuery) use ($minEngineCapacity, $maxEngineCapacity) {
+                    $subQuery->whereRaw("CAST(engine_capacity AS UNSIGNED) >= ?", [$minEngineCapacity])
+                             ->whereRaw("CAST(engine_capacity AS UNSIGNED) <= ?", [$maxEngineCapacity]);
+                })
+                ->orWhere(function ($subQuery) use ($minEngineCapacity, $maxEngineCapacity) {
+                    $subQuery->whereRaw("CAST(SUBSTRING_INDEX(engine_capacity, '-', 1) AS UNSIGNED) >= ?", [$minEngineCapacity])
+                             ->whereRaw("CAST(SUBSTRING_INDEX(engine_capacity, '-', -1) AS UNSIGNED) <= ?", [$maxEngineCapacity]);
+                });
+            });
+        } else {
+            // Handling a single value format
+            $query->whereRaw("CAST(engine_capacity AS UNSIGNED) = ?", [$engineCapacityRange[0]]);
         }
-
-        if ($request->filled('car_mileage')) {
-            $mileageRange = explode(',', $request->car_mileage);
+    }
+    
+    if ($request->filled('car_mileage')) {
+        $mileageRange = explode('-', $request->car_mileage);
+    
+        if (count($mileageRange) === 2) {
+            // Handling a range format
             $minMileage = $mileageRange[0];
             $maxMileage = $mileageRange[1];
-            $query->whereBetween('car_mileage', [$minMileage, $maxMileage]);
-        }
-
-        if ($request->filled('price_range')) {
-            $priceRange = explode(',', $request->price_range);
-            $minPrice = $priceRange[0];
-            $maxPrice = $priceRange[1];
-            $query->whereBetween('car_price', [$minPrice, $maxPrice]);
-        }
-
-        if ($request->filled('brand')) {
-            $query->where('brand', $request->brand);
-        }
-
-
-        // $cars = Car::get();
-        $carss = $query->orderBy('created_at', 'desc')->get();
-    //    foreach ($carss as &$car) {
-    //         $file = file_get_contents('http://127.0.0.1:8000/public/photos/'.$car->car_img);
-    //         $car['car_img'] = base64_encode($file);
-    //         // echo $car->car_img;
-            
-    //     }
-        
-        if (!empty($carss)) {
-            // return Cars::collection($carss);
-            return response()->json([
-                'message' => "Cars",
-                'data' =>  $carss
-            ], 200);
+            $query->where(function ($query) use ($minMileage, $maxMileage) {
+                $query->where(function ($subQuery) use ($minMileage, $maxMileage) {
+                    $subQuery->whereRaw("CAST(car_mileage AS UNSIGNED) >= ?", [$minMileage])
+                             ->whereRaw("CAST(car_mileage AS UNSIGNED) <= ?", [$maxMileage]);
+                })
+                ->orWhere(function ($subQuery) use ($minMileage, $maxMileage) {
+                    $subQuery->whereRaw("CAST(SUBSTRING_INDEX(car_mileage, '-', 1) AS UNSIGNED) >= ?", [$minMileage])
+                             ->whereRaw("CAST(SUBSTRING_INDEX(car_mileage, '-', -1) AS UNSIGNED) <= ?", [$maxMileage]);
+                });
+            });
         } else {
-            return response()->json(['message' => 'No record available'], 200);
+            // Handling a single value format
+            $query->whereRaw("CAST(car_mileage AS UNSIGNED) = ?", [$mileageRange[0]]);
         }
-
     }
+    
+    if ($request->filled('car_price_range')) {
+        $priceRange = explode('-', $request->car_price_range);
+    
+        if (count($priceRange) === 2) {
+            $minPrice = (int)$priceRange[0];
+            $maxPrice = (int)$priceRange[1];
+    
+            $query->where(function ($query) use ($minPrice, $maxPrice) {
+                // Check for any overlap between the stored price range and the selected price range
+                $query->where(function ($query) use ($minPrice, $maxPrice) {
+                    $query->whereRaw("CAST(SUBSTRING_INDEX(car_price_range, '-', 1) AS UNSIGNED) BETWEEN ? AND ?", [$minPrice, $maxPrice])
+                          ->orWhereRaw("CAST(SUBSTRING_INDEX(car_price_range, '-', -1) AS UNSIGNED) BETWEEN ? AND ?", [$minPrice, $maxPrice])
+                          ->orWhereRaw("? BETWEEN CAST(SUBSTRING_INDEX(car_price_range, '-', 1) AS UNSIGNED) AND CAST(SUBSTRING_INDEX(car_price_range, '-', -1) AS UNSIGNED)", [$minPrice])
+                          ->orWhereRaw("? BETWEEN CAST(SUBSTRING_INDEX(car_price_range, '-', 1) AS UNSIGNED) AND CAST(SUBSTRING_INDEX(car_price_range, '-', -1) AS UNSIGNED)", [$maxPrice]);
+                });
+            });
+        }
+    }
+    
+    
+
+    if ($request->filled('brand')) {
+        $query->where('brand', $request->brand);
+    }
+
+    $carss = $query->orderBy('created_at', 'desc')->get();
+
+    if (!empty($carss)) {
+        return response()->json([
+            'message' => "Cars",
+            'data' =>  $carss
+        ], 200);
+    } else {
+        return response()->json(['message' => 'No record available'], 200);
+    }
+}
+
+
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

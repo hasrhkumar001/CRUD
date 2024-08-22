@@ -40,9 +40,9 @@
       <!-- <td>{{ 'public/photos/' . $item->car_img }}</td> -->
       <td >{{$item->car_name}}</td>
       <td >{{$item->brand}}</td>
-      <td >@if (str_contains($item->fuel_type, 'PETROL') || str_contains($item->fuel_type, 'DIESEL') || str_contains($item->fuel_type, 'HYBRID'))
+      <td >@if (str_contains($item->fuel_type, 'Petrol') || str_contains($item->fuel_type, 'Diesel') || str_contains($item->fuel_type, 'Hybrid'))
               {{$item->engine_capacity}} cc
-          @elseif (str_contains($item->fuel_type, 'ELECTRIC'))
+          @elseif (str_contains($item->fuel_type, 'Electric'))
               {{$item->engine_capacity}} KWh
           @else
               {{$item->engine_capacity}}
@@ -51,56 +51,16 @@
       <td >{{$item->fuel_type}}</td>
       <td >{{$item->transmission_type}}</td>
       <td >{{$item->car_mileage}} 
-            @if (str_contains($item->fuel_type, 'ELECTRIC'))
+            @if (str_contains($item->fuel_type, 'Electric'))
                 km
             @else
                 kmpl
             @endif</td>
       
-      <td >@php
-        // Extract the price range values
-        $priceRange = $item->car_price_range;
-
-        // Initialize default values
-        $formattedMinPrice = '0';
-        $formattedMaxPrice = '0';
-        $unit = '';
-
-        // Check if the price range contains a hyphen
-        if (strpos($priceRange, '-') !== false) {
-            // Split the price range into min and max
-            list($minPrice, $maxPrice) = explode('-', $priceRange, 2);
-
-            // Ensure the prices are numeric and convert to float
-            $minPrice = is_numeric($minPrice) ? (float)$minPrice : 0;
-            $maxPrice = is_numeric($maxPrice) ? (float)$maxPrice : 0;
-
-            // Function to format price with units
-            function formatPrice($price) {
-                if ($price >= 10000000) {
-                    return [number_format($price / 10000000, 2), 'crore'];
-                } elseif ($price >= 100000) {
-                    return [number_format($price / 100000, 2), 'lakh'];
-                } elseif ($price >= 1000) {
-                    return [number_format($price / 1000, 2), 'thousand'];
-                } else {
-                    return [number_format($price, 2), ''];
-                }
-            }
-
-            // Format both min and max prices
-            list($formattedMinPrice, $minUnit) = formatPrice($minPrice);
-            list($formattedMaxPrice, $maxUnit) = formatPrice($maxPrice);
-
-            // Handle units
-            $unit = $minUnit === $maxUnit ? $minUnit : '';
-        } else {
-            // Handle cases where price range is not in the expected format
-            $formattedMinPrice = $priceRange; // Just display the original range
-        }
-    @endphp
-
-    {{ $formattedMinPrice }} {{ $unit }} - {{ $formattedMaxPrice }} {{ $unit }}</td>
+      <td >
+        {{$item->car_price_range}}
+        
+      </td>
       
           <td ><button wire:click="viewCarModels({{ $item->id }})" class="btn btn-primary btn-sm shadow">Models</button></td>
           <td ><a  href="/edit/car/{{$item->id}}" wire:navigate  class="btn btn-warning btn-sm shadow" >Edit</td>

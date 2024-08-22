@@ -2,17 +2,80 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use App\Models\CarModel;
 use Illuminate\Http\Request;
 
 class CarModelController extends Controller
 {
-    public function index()
-    {
-        $carModels = CarModel::with('car')->get();
-        return response()->json($carModels);
+    public function index(Request $request)
+{
+    // Initialize query for CarModel
+    $query = CarModel::query();
+    
+    // Retrieve car_id from request
+    $carId = $request->input('car_id'); 
+
+    // Apply filters
+    if ($request->filled('fuel_type')) {
+        $query->where('fuel_type', $request->fuel_type);
     }
 
+    if ($request->filled('engine_capacity')) {
+        $engineCapacityRange = explode(',', $request->engine_capacity);
+        $minEngineCapacity = $engineCapacityRange[0];
+        $maxEngineCapacity = $engineCapacityRange[1];
+        $query->whereBetween('engine_capacity', [$minEngineCapacity, $maxEngineCapacity]);
+    }
+
+    if ($request->filled('car_mileage')) {
+        $mileageRange = explode(',', $request->car_mileage);
+        $minMileage = $mileageRange[0];
+        $maxMileage = $mileageRange[1];
+        $query->whereBetween('car_mileage', [$minMileage, $maxMileage]);
+    }
+
+    if ($request->filled('price_range')) {
+        $priceRange = explode(',', $request->price_range);
+        $minPrice = $priceRange[0];
+        $maxPrice = $priceRange[1];
+        $query->whereBetween('car_price', [$minPrice, $maxPrice]);
+    }
+
+    if ($request->filled('brand')) {
+        $query->where('brand', $request->brand);
+    }
+
+    // Retrieve filtered CarModels
+    $carModels = $query->orderBy('created_at', 'desc')->get();
+
+    // Retrieve specific Car if car_id is provided
+    $specificCar = null;
+    if ($carId) {
+        $specificCar = Car::with('carModels')->find($carId);
+    }
+        
+
+    // Prepare response data
+    $responseData = [
+        'cars' => $carModels,
+    ];
+
+    if ($specificCar) {
+        $responseData['car'] = $specificCar;
+    }
+
+    if ($carModels->isNotEmpty() || $specificCar) {
+        return response()->json([
+            'message' => 'Car Models and Specific Car Retrieved Successfully',
+            'data' => $responseData,
+        ], 200);
+    } else {
+        return response()->json(['message' => 'No car models or specific car available'], 200);
+    }
+}
+
+    
     public function getByCarId($car_id)
 {
     // Query the car model based on the car_id

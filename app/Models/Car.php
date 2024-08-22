@@ -21,7 +21,7 @@ class Car extends Model
         'car_mileage',
         'car_price',
         'transmission_type',
-        'model_year'
+        
     ];
     public function carModels()
     {
