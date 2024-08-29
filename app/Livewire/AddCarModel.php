@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Car;
 use App\Models\CarModel;
+use Illuminate\Support\Facades\Route;
 
 class AddCarModel extends Component
 {
@@ -17,6 +18,8 @@ class AddCarModel extends Component
     public $car_desc;
     public $car_mileage;
     public $car_price;
+    public $cars = [];
+    public $dropdownEnabled = false;
 
     
     
@@ -32,8 +35,21 @@ class AddCarModel extends Component
             
     ];
 
-    public function mount($id){
-        $this->carId = $id;
+    public function mount($id = null)
+    {
+        // Fetch the list of cars
+        $this->cars = Car::all();
+
+        // Enable the dropdown based on the route
+        if (Route::is('add.carmodel')) {
+            // For the /add/carmodel/{id} route
+            $this->dropdownEnabled = false;
+            // You can add logic to load the car model based on $id if needed
+            $this->carId = $id;
+        } else {
+            // For the /add/car-models route
+            $this->dropdownEnabled = true;
+        }
     }
     public function submit()
     {
@@ -58,12 +74,9 @@ class AddCarModel extends Component
     }
 
     
+    
     public function render()
     {
-        $cars = Car::all(); // Fetch all cars to populate the dropdown
-
-        return view('livewire.add-car-model',[
-            'cars' => Car::all(),
-        ]);
+        return view('livewire.add-car-model');
     }
 }

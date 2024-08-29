@@ -9,6 +9,7 @@
             <div class="row">
                 <div class="col"><h2>Add New Car</h2></div>
                 <div class="col">
+                <a href="/uploadcars" wire:navigate class="btn btn-primary float-end mx-2">Add Car With CSV</a>
                     <a href="/" wire:navigate class="btn btn-primary float-end">Cars List</a>
                 </div>
             </div>
@@ -88,9 +89,18 @@
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
-                <div class="mb-3">
+                <div class="mb-3"  
+                    x-data="{ isUploading: false, progress: 0 }"
+                    x-on:livewire-upload-start="isUploading = true"
+                    x-on:livewire-upload-finish="isUploading = false"
+                    x-on:livewire-upload-error="isUploading = false"
+                    x-on:livewire-upload-progress="progress = $event.detail.progress"
+                >
                     <label for="photo" class="form-label">Car Image</label>
                     <input type="file" class="form-control" wire:model="photo">
+                    <div x-show="isUploading" class="progress mt-2">
+                    <div class="progress-bar" role="progressbar" :style="`width: ${progress}%`"></div>
+                </div>
                     @error('photo')
                         <span class="text-danger">{{$message}}</span>
                     @enderror

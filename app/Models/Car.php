@@ -19,7 +19,7 @@ class Car extends Model
         'car_img',
         'car_desc',
         'car_mileage',
-        'car_price',
+        'car_price_range',
         'transmission_type',
         
     ];

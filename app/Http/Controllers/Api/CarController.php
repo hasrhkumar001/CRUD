@@ -126,8 +126,8 @@ class CarController extends Controller
             'car_img' => 'required|image|max:10240',
             'car_desc' => 'required|max:1024',
             'car_mileage' => 'required',
-            'car_price' => 'required',
-            'model_year' => 'required',
+            'car_price_range' => 'required',
+            
             'transmission_type' => 'required'
         ]);
 
@@ -162,7 +162,7 @@ class CarController extends Controller
             'car_img' => $request->car_img,
             'car_desc' => $request->car_desc,
             'car_mileage' => $request->car_mileage,
-            'car_price' => $request->car_price,
+            'car_price_range' => $request->car_price,
             'model_year' => $request->model_year,
             'transmission_type' => strtoupper($request->transmission_type)
         ]);
@@ -186,7 +186,7 @@ class CarController extends Controller
             'car_desc' => 'required|max:10240',
             'car_mileage' => 'required',
             'car_price' => 'required',
-            'model_year' => 'required',
+            
             'transmission_type' => 'required'
             // 'car_img' => 'required|image|max:1024'
         ]);
@@ -206,8 +206,8 @@ class CarController extends Controller
             'car_img' => $request->car_img,
             'car_desc' => $request->car_desc,
             'car_mileage' => $request->car_mileage,
-            'car_price' => $request->car_price,
-            'model_year' => $request->model_year,
+            'car_price_range' => $request->car_price,
+            
             'transmission_type' => strtoupper($request->transmission_type)
         ]);
         return response()->json([

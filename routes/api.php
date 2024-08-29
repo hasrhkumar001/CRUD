@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarImageController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Livewire\ReviewForm;
@@ -37,6 +38,7 @@ Route::get('/cars/{carId}/reviews', [ReviewController::class, 'index']);
 Route::get('/car-models', [CarModelController::class, 'index']);
 Route::get('/car-models/{id}', [CarModelController::class, 'show']);
 Route::get('/car-models/car/{car_id}', [CarModelController::class, 'getByCarId']);
+Route::get('/cars/{id}/images', [CarImageController::class, 'getCarImages']);
 
 Route::middleware(['auth:api'])->group(function(){
     Route::put('/user/profile', [AuthController::class,'update']);

@@ -7,9 +7,9 @@
 
     <form wire:submit.prevent="submit">
        
-        <div class="form-group mb-3 ">
+    <div class="form-group mb-3">
             <label for="carId" class="form-label">Select Car</label>
-            <select wire:model="carId" id="carId" class="form-control" disabled>
+            <select wire:model="carId" id="carId" class="form-control" :disabled="!dropdownEnabled">
                 <option value="">Select a Car</option>
                 @foreach($cars as $car)
                     <option value="{{ $car->id }}">{{ $car->brand }} {{ $car->car_name }}</option>
@@ -21,13 +21,14 @@
         <div class="row">
             <div class="col-6 mb-3 ">
                 <label for="model_name" class="form-label">Model Name</label>
-                <input type="text" wire:model="model_name" id="model_name" class="form-control">
+                <input type="text" wire:model="model_name" id="model_name" class="form-control" placeholder="Enter Model Name">
                 @error('model_name') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
 
             <div class="col-6 mb-3 ">
             <label for="transmission_type" class="form-label">Transmission Type</label>
                             <select id="transmission_type" wire:model="transmission_type" class="form-select" >
+                            <option value="">Select Transmission Type</option>
                                 <option value="Automatic">Automatic</option>
                                 <option value="Manual">Manual</option>
                             </select>
@@ -73,7 +74,7 @@
 
             <div class="col-6 mb-3 ">
                 <label for="car_price" class="form-label">Price</label>
-                <input type="text" wire:model="car_price" id="car_price" class="form-control">
+                <input type="text" wire:model="car_price" id="car_price" class="form-control" placeholder="Enter Price">
                 @error('car_price') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
             <div class="form-group mb-3 ">

@@ -17,6 +17,14 @@
                         <i class="fa-solid fa-circle-plus"></i>
                         <a href="/add" wire:navigate class="nav-link">Add New Car</a>
                     </li>
+                    <li class="nav-link {{ Request::is('add/car-models') ? 'active' : '' }} d-flex align-items-center">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        <a href="/add/car-models" wire:navigate class="nav-link">Add New Car Model</a>
+                    </li>
+                    <li class="nav-link {{ Request::is('add/images') ? 'active' : '' }} d-flex align-items-center">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        <a href="/add/images" wire:navigate class="nav-link">Add Car Images</a>
+                    </li>
                 </ul>
             </div>
         </li>
